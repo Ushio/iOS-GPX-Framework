@@ -118,6 +118,11 @@
     return [GPXType dateTime:_timeValue];
 }
 
+- (NSDate *)timeParse:(NSDate *(^)(NSString *text))parse
+{
+    return parse(_timeValue);
+}
+
 - (void)setTime:(NSDate *)time
 {
     _timeValue = [GPXType valueForDateTime:time];

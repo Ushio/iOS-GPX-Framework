@@ -8,6 +8,9 @@
 
 #import "GPXType.h"
 
+#include <time.h>
+#include <xlocale.h>
+
 @implementation GPXType
 
 + (double)latitude:(NSString *)value
@@ -211,51 +214,28 @@
     return nil;
 }
 
-// どうも問題があるようだ
-//static NSArray *g_formatters = nil;
-//+ (NSDate *)dateTime:(NSString *)value
+//+ (NSString *)valueForDateTime_slow:(NSDate *)date
 //{
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        NSArray *formats = @[@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'",
-//                             @"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'",
-//                             @"yyyy'-'MM'-'dd'",
-//                             @"yyyy'-'MM'",
-//                             @"yyyy'"];
-//        
-//        NSMutableArray *formatters = [NSMutableArray array];
-//        for(NSString *format in formats)
-//        {
-//            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//            formatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-//            formatter.dateFormat = format;
-//            [formatters addObject:formatter];
-//        }
-//        g_formatters = formatters;
-//    });
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    formatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
 //    
-//    for(NSDateFormatter *formatter in g_formatters)
-//    {
-//        NSDate *date = [formatter dateFromString:value];
-//        if(date)
-//        {
-//            return date;
-//        }
-//    }
+//    // dateTime（YYYY-MM-DDThh:mm:ssZ）
+//    formatter.dateFormat = @"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
 //    
-//    return nil;
+//    return [formatter stringFromDate:date];
 //}
-
-
 + (NSString *)valueForDateTime:(NSDate *)date
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+    char buffer[128];
     
-    // dateTime（YYYY-MM-DDThh:mm:ssZ）
-    formatter.dateFormat = @"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
+    time_t time = [date timeIntervalSince1970];
+    struct tm timeStruct;
+    gmtime_r(&time, &timeStruct);
+    setlocale(LC_TIME, "C");
+    strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%SZ", &timeStruct);
     
-    return [formatter stringFromDate:date];
+    NSString *str = [NSString stringWithUTF8String:buffer];
+    return str;
 }
 
 + (NSInteger)nonNegativeInteger:(NSString *)value

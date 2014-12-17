@@ -91,6 +91,8 @@
 /** The longitude of the point. Decimal degrees, WGS84 datum. */
 @property (nonatomic, assign) double longitude;
 
+- (NSDate *)timeParse:(NSDate *(^)(NSString *text))parse;
+
 
 /// ---------------------------------
 /// @name Create Waypoint
