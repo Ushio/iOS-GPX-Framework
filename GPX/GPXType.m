@@ -10,69 +10,69 @@
 
 @implementation GPXType
 
-+ (CGFloat)latitude:(NSString *)value
++ (double)latitude:(NSString *)value
 {
     @try {
-        CGFloat f = [value floatValue];
-        if (-90.f <= f && f <= 90.f) {
+        double f = [value doubleValue];
+        if (-90.0 <= f && f <= 90.0) {
             return f;
         }
     }
     @catch (NSException *exception) {
     }
     
-    return 0.f;
+    return 0.0;
 }
 
-+ (NSString *)valueForLatitude:(CGFloat)latitude
++ (NSString *)valueForLatitude:(double)latitude
 {
-    if (-90.f <= latitude && latitude <= 90.f) {
+    if (-90.0 <= latitude && latitude <= 90.0) {
         return [NSString stringWithFormat:@"%f", latitude];
     }
     
     return @"0";
 }
 
-+ (CGFloat)longitude:(NSString *)value
++ (double)longitude:(NSString *)value
 {
     @try {
-        CGFloat f = [value floatValue];
-        if (-180.f <= f && f <= 180.f) {
+        double f = [value doubleValue];
+        if (-180.0 <= f && f <= 180.0) {
             return f;
         }
     }
     @catch (NSException *exception) {
     }
     
-    return 0.f;
+    return 0.0;
 }
 
-+ (NSString *)valueForLongitude:(CGFloat)longitude
++ (NSString *)valueForLongitude:(double)longitude
 {
-    if (-180.f <= longitude && longitude <= 180.f) {
+    if (-180.0 <= longitude && longitude <= 180.0) {
         return [NSString stringWithFormat:@"%f", longitude];
     }
     
     return @"0";
 }
 
-+ (CGFloat)degress:(NSString *)value
++ (double)degress:(NSString *)value
 {
     @try {
-        CGFloat f = [value floatValue];
-        if (0.f <= f && f <= 360.f) {
+        double f = [value doubleValue];
+        if (0.0 <= f && f <= 360.0) {
             return f;
         }
     }
     @catch (NSException *exception) {
     }
     
-    return 0.f;    
+    return 0.0;    
 }
 
-+ (NSString *)valueForDegress:(CGFloat)degress
++ (NSString *)valueForDegress:(double)degress
 {
-    if (0.0f <= degress && degress <= 360.f) {
+    if (0.0 <= degress && degress <= 360.0) {
         return [NSString stringWithFormat:@"%f", degress];
     }
     
@@ -132,16 +132,16 @@
 + (NSString *)valueForDgpsStation:(NSInteger)dgpsStation
 {
     if (0 <= dgpsStation && dgpsStation <= 1023) {
-        return [NSString stringWithFormat:@"%d", dgpsStation];
+        return [NSString stringWithFormat:@"%d", (int)dgpsStation];
     }
     
     return @"0";
 }
 
-+ (CGFloat)decimal:(NSString *)value
++ (double)decimal:(NSString *)value
 {
     @try {
-        CGFloat f = [value floatValue];
+        double f = [value doubleValue];
         return f;
     }
     @catch (NSException *exception) {
@@ -150,7 +150,7 @@
     return 0;
 }
 
-+ (NSString *)valueForDecimal:(CGFloat)decimal
++ (NSString *)valueForDecimal:(double)decimal
 {
     return [NSString stringWithFormat:@"%f", decimal];
     
@@ -211,6 +211,42 @@
     return nil;
 }
 
+// どうも問題があるようだ
+//static NSArray *g_formatters = nil;
+//+ (NSDate *)dateTime:(NSString *)value
+//{
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        NSArray *formats = @[@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'",
+//                             @"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'",
+//                             @"yyyy'-'MM'-'dd'",
+//                             @"yyyy'-'MM'",
+//                             @"yyyy'"];
+//        
+//        NSMutableArray *formatters = [NSMutableArray array];
+//        for(NSString *format in formats)
+//        {
+//            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//            formatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+//            formatter.dateFormat = format;
+//            [formatters addObject:formatter];
+//        }
+//        g_formatters = formatters;
+//    });
+//    
+//    for(NSDateFormatter *formatter in g_formatters)
+//    {
+//        NSDate *date = [formatter dateFromString:value];
+//        if(date)
+//        {
+//            return date;
+//        }
+//    }
+//    
+//    return nil;
+//}
+
+
 + (NSString *)valueForDateTime:(NSDate *)date
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -239,7 +275,7 @@
 + (NSString *)valueForNonNegativeInteger:(NSInteger)integer
 {
     if (integer >= 0) {
-        return [NSString stringWithFormat:@"%d", integer];
+        return [NSString stringWithFormat:@"%d", (int)integer];
     }
     
     return @"0";

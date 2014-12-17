@@ -12,5 +12,5 @@
 /** You can add extend GPX by adding your own elements from another schema here. 
  */
 @interface GPXExtensions : GPXElement
-
+@property (nonatomic, copy) NSString *steps;
 @end

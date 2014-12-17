@@ -101,7 +101,7 @@
     return @"http://www.topografix.com/GPX/1/1";
 }
 
-- (GPXWaypoint *)newWaypointWithLatitude:(CGFloat)latitude longitude:(CGFloat)longitude
+- (GPXWaypoint *)newWaypointWithLatitude:(double)latitude longitude:(double)longitude
 {
     GPXWaypoint *waypoint = [GPXWaypoint waypointWithLatitude:latitude longitude:longitude];
     [self addWaypoint:waypoint];
@@ -229,7 +229,7 @@
     }
     
     [gpx appendString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n"];
-    [gpx appendString:[NSString stringWithFormat:@"%@%<%@%@>\r\n"
+    [gpx appendString:[NSString stringWithFormat:@"%@<%@%@>\r\n"
                        , [self indentForIndentationLevel:indentationLevel]
                        , [[self class] tagName]
                        , attribute

@@ -17,6 +17,7 @@
 {
     self = [super initWithXMLElement:element parent:parent];
     if (self) {
+        _steps = [self textForSingleChildElementNamed:@"steps" xmlElement:element];
     }
     return self;
 }
@@ -40,6 +41,7 @@
 {
     [super addChildTagToGpx:gpx indentationLevel:indentationLevel];
     
+    [self gpx:gpx addPropertyForValue:self.steps tagName:@"steps" indentationLevel:indentationLevel];
 }
 
 @end

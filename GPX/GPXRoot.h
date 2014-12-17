@@ -72,7 +72,7 @@
  @param longitude The longitude of the point.
  @return A newly created waypoint element.
  */
-- (GPXWaypoint *)newWaypointWithLatitude:(CGFloat)latitude longitude:(CGFloat)longitude;
+- (GPXWaypoint *)newWaypointWithLatitude:(double)latitude longitude:(double)longitude;
 
 
 /// ---------------------------------

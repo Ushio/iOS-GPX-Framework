@@ -92,7 +92,7 @@
     return self;
 }
 
-+ (GPXWaypoint *)waypointWithLatitude:(CGFloat)latitude longitude:(CGFloat)longitude
++ (GPXWaypoint *)waypointWithLatitude:(double)latitude longitude:(double)longitude
 {
     GPXWaypoint *waypoint = [GPXWaypoint new];
     waypoint.latitude = latitude;
@@ -103,12 +103,12 @@
 
 #pragma mark - Public methods
 
-- (CGFloat)elevation
+- (double)elevation
 {
     return [GPXType decimal:_elevationValue];
 }
 
-- (void)setElevation:(CGFloat)elevation
+- (void)setElevation:(double)elevation
 {
     _elevationValue = [GPXType valueForDecimal:elevation];
 }
@@ -123,22 +123,22 @@
     _timeValue = [GPXType valueForDateTime:time];
 }
 
-- (CGFloat)magneticVariation
+- (double)magneticVariation
 {
     return [GPXType degress:_magneticVariationValue];
 }
 
-- (void)setMagneticVariation:(CGFloat)magneticVariation
+- (void)setMagneticVariation:(double)magneticVariation
 {
     _magneticVariationValue = [GPXType valueForDegress:magneticVariation];
 }
 
-- (CGFloat)geoidHeight
+- (double)geoidHeight
 {
     return [GPXType decimal:_geoidHeightValue];
 }
 
-- (void)setGeoidHeight:(CGFloat)geoidHeight
+- (void)setGeoidHeight:(double)geoidHeight
 {
     _geoidHeightValue = [GPXType valueForDecimal:geoidHeight];
 }
@@ -184,7 +184,7 @@
 
 - (void)setFix:(NSInteger)fix
 {
-    _fixValue = [GPXType valueForFix:fix];
+    _fixValue = [GPXType valueForFix:(GPXFix)fix];
 }
 
 - (NSInteger)satellites
@@ -197,42 +197,42 @@
     _satellitesValue = [GPXType valueForNonNegativeInteger:satellites];
 }
 
-- (CGFloat)horizontalDilution
+- (double)horizontalDilution
 {
     return [GPXType decimal:_horizontalDilutionValue];
 }
 
-- (void)setHorizontalDilution:(CGFloat)horizontalDilution
+- (void)setHorizontalDilution:(double)horizontalDilution
 {
     _horizontalDilutionValue = [GPXType valueForDecimal:horizontalDilution];
 }
 
-- (CGFloat)verticalDilution
+- (double)verticalDilution
 {
     return [GPXType decimal:_verticalDilutionValue];
 }
 
-- (void)setVerticalDilution:(CGFloat)verticalDilution
+- (void)setVerticalDilution:(double)verticalDilution
 {
     _verticalDilutionValue = [GPXType valueForDecimal:verticalDilution];
 }
 
-- (CGFloat)positionDilution
+- (double)positionDilution
 {
     return [GPXType decimal:_positionDilutionValue];
 }
 
-- (void)setPositionDilution:(CGFloat)positionDilution
+- (void)setPositionDilution:(double)positionDilution
 {
     _positionDilutionValue = [GPXType valueForDecimal:positionDilution];
 }
 
-- (CGFloat)ageOfDGPSData
+- (double)ageOfDGPSData
 {
     return [GPXType decimal:_ageOfDGPSDataValue];
 }
 
-- (void)setAgeOfDGPSData:(CGFloat)ageOfDGPSData
+- (void)setAgeOfDGPSData:(double)ageOfDGPSData
 {
     _ageOfDGPSDataValue = [GPXType valueForDecimal:ageOfDGPSData];
 }
@@ -247,22 +247,22 @@
     _DGPSidValue = [GPXType valueForDgpsStation:DGPSid];
 }
 
-- (CGFloat)latitude
+- (double)latitude
 {
     return [GPXType latitude:_latitudeValue];
 }
 
-- (void)setLatitude:(CGFloat)latitude
+- (void)setLatitude:(double)latitude
 {
     _latitudeValue = [GPXType valueForLatitude:latitude];
 }
 
-- (CGFloat)longitude
+- (double)longitude
 {
     return [GPXType longitude:_longitudeValue];
 }
 
-- (void)setLongitude:(CGFloat)longitude
+- (void)setLongitude:(double)longitude
 {
     _longitudeValue = [GPXType valueForLongitude:longitude];
 }
@@ -288,7 +288,7 @@
         [attribute appendFormat:@" lon=\"%@\"", _longitudeValue];
     }
     
-    [gpx appendString:[NSString stringWithFormat:@"%@%<%@%@>\r\n"
+    [gpx appendString:[NSString stringWithFormat:@"%@<%@%@>\r\n"
                        , [self indentForIndentationLevel:indentationLevel]
                        , [[self class] tagName]
                        , attribute
